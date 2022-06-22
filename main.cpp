@@ -53,9 +53,9 @@ int main(int argc, char **argv) {
 	
 	if (!AppSettings::ant){
 		while (true){
-			std::cout << " \e[1D" << std::flush;
 			randomlyMove();
 			TerminalUtil::setBackgroundColor(gradientalColorThing());
+			std::cout << " \e[1D" << std::flush;
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	} else {
@@ -67,8 +67,6 @@ int main(int argc, char **argv) {
 		}
 		while (true){
 			int x, y;
-			std::cout << " \e[1D" << std::flush;
-			
 			randomlyMove();
 			TerminalUtil::fetchCursorPosition(&x, &y);
 			board[x][y] = !board[x][y];
@@ -77,7 +75,7 @@ int main(int argc, char **argv) {
 			} else {
 				TerminalUtil::setBackgroundColor((int[3]){0, 0, 0});
 			}
-			
+			std::cout << " \e[1D" << std::flush;
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
