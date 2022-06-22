@@ -7,19 +7,7 @@
 #include <vector>
 #include "ShadeThing.cpp"
 #include "AppUtil.cpp"
-
-void setBackgroundColor(int rgb_values[3]){
-	std::cout << "\e[48;2;" << rgb_values[0] << ";" << rgb_values[1] << ";" << rgb_values[2] << "m";
-}
-
-void setForegroundColor(int rgb_values[3]){
-	std::cout << "\e[38;2;" << rgb_values[0] << ";" << rgb_values[1] << ";" << rgb_values[2] << "m";
-}
-
-void fetchCursorPosition(int *x, int *y){
-	*x = WEXITSTATUS(std::system("./fetchCursorPosition.sh ROW"));
-	*y = WEXITSTATUS(std::system("./fetchCursorPosition.sh COLUMN"));
-}
+#include "TerminalUtil.cpp"
 
 void randomlyMove(){
 	const char dirs[4] = {'A', 'B', 'C', 'D'};
@@ -67,7 +55,7 @@ int main(int argc, char **argv) {
 		while (true){
 			std::cout << " \e[1D" << std::flush;
 			randomlyMove();
-			setBackgroundColor(gradientalColorThing());
+			TerminalUtil::setBackgroundColor(gradientalColorThing());
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	} else {
@@ -82,12 +70,12 @@ int main(int argc, char **argv) {
 			std::cout << " \e[1D" << std::flush;
 			
 			randomlyMove();
-			fetchCursorPosition(&x, &y);
+			TerminalUtil::fetchCursorPosition(&x, &y);
 			board[x][y] = !board[x][y];
 			if (board[x][y]){
-				setBackgroundColor(gradientalColorThing());
+				TerminalUtil::setBackgroundColor(gradientalColorThing());
 			} else {
-				setBackgroundColor((int[3]){0, 0, 0});
+				TerminalUtil::setBackgroundColor((int[3]){0, 0, 0});
 			}
 			
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
