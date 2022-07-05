@@ -41,7 +41,6 @@ int main(int argc, char **argv) {
         args.push_back(argv[i]);   
     };
 	AppSettings::apply(args);
-
 	
 	std::time_t now;
 	srand(time(0));
